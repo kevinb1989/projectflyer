@@ -12,8 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::get('showassets', function () {
+    return link_to_asset('/css/app.css');
+});
+
+
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +38,20 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     //
+    Route::resource('flyers', 'FlyersController');
+    
 });
+
+
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
+});
+
+Route::post('{zip}/{street}/photos', 'FlyersController@addPhotos');
+Route::get('{zip}/{street}', 'FlyersController@show');
+
+
+

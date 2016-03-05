@@ -19,3 +19,15 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Flyer::class, function (Faker\Generator $faker) {
+    return [
+        'street' => $faker->streetAddress,
+        'city' => $faker->city,
+        'zip' => $faker->postcode,
+        'state' => $faker->state,
+        'country' => $faker->country,
+        'price' => $faker->numberBetween(10000, 50000),
+        'description' => $faker->paragraph(3),
+    ];
+});

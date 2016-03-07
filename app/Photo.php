@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Image;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -9,19 +10,32 @@ class Photo extends Model
 {
     //
 
-    protected $fillable = ['path'];
+    protected $fillable = ['path', 'name', 'thumbnail_path'];
 
-    protected $baseDir = 'flyers/photos';
+    protected $baseDir = 'flyers_stuff/photos';
 
-    public static function fromForm(UploadedFile $file){
-        $photo = new static;
+    public static function named(UploadedFile $file){
+        
+        return (new static)->saveAs($file->getClientOriginalName());
 
-        $name = time() . $file->getClientOriginalName();
+        
+    }
 
-        $photo->path = $photo->baseDir . '/' . $name;
+    protected function saveAs($name){
+        $this->name = sprintf('%s-%s', time(), $name);
+        $this->path = sprintf('%s/%s', $this->baseDir, $this->name);
+        $this->thumbnail_path = sprintf('%s/tn_%s', $this->baseDir, $this->name);
+        return $this;
+    }
 
-        $file->move($photo->baseDir, $name);
+    public function move(UploadedFile $file){
 
-        return $photo;
+        $file->move($this->baseDir, $this->name);
+        Image::make($this->path)
+            ->fit(200)
+            ->save($this->thumbnail_path);
+
+        return $this;
+
     }
 }

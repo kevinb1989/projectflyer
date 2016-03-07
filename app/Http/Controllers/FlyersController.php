@@ -10,12 +10,13 @@ use App\Http\Requests\FlyerRequest;
 use App\Http\Controllers\Controller;
 use App\Flyer;
 use App\Photo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class FlyersController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth', ['except' => 'show']);
+        $this->middleware('auth', ['except' => ['show']]);
     }
 
 
@@ -27,6 +28,7 @@ class FlyersController extends Controller
     public function index()
     {
         //
+        return 'flyers index page';
     }
 
     /**
@@ -53,7 +55,6 @@ class FlyersController extends Controller
         Flyer::create($request->all());
 
         flash('Flyer created successfully!');
-
 
         return redirect()->back();
     }
@@ -112,20 +113,26 @@ class FlyersController extends Controller
                 'photo' => 'required|mimes:jpg,jpeg,bmp,png'
             ]);
 
-        $file = $request->file('photo');
-
         //$name = time() . $file->getClientOriginalName();
 
         //$file->move('flyers/photos', $name);
 
         $flyer = Flyer::locatedAt($zip, $street);
 
-        $photo = Photo::fromForm($file);
+        $photo = $this->makePhoto($request->file('photo'));
+
+        
 
         $flyer->addPhoto($photo);
 
         //$flyer->photos()->create(['path'=>'flyers/photos/'.$name]);
 
         return 'Uploaded';
+    }
+
+    public function makePhoto(UploadedFile $file){
+
+        return Photo::named($file)->move($file);
+
     }
 }

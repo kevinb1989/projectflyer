@@ -8,7 +8,7 @@
 	<h3>Selling Your home</h3>
 	<div class="row">
 
-		{!!Form::open(['method'=>'POST', 'action'=>'FlyersController@store', 'enctype'=>'multipart/form-data'])!!}
+		{!!Form::open(['method'=>'POST', 'url'=>'flyers',  'enctype'=>'multipart/form-data'])!!}
 			@include('flyers.form')
 
 		{!!Form::close()!!}

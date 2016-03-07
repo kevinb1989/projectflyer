@@ -9,9 +9,15 @@
 			<div class='description'>{{$flyer->description}}</div>
 		</div>
 
-		<div class="col-md-9">
-			@foreach($flyer->photos as $photo)
-				<img src="{{url($photo->path)}}">
+		<div class="col-md-8 gallery">
+			@foreach($flyer->photos()->get()->chunk(4) as $set)
+				<div class="row">
+					@foreach ($set as $photo)
+						<div class="col-md-3 gallery__image">
+							<img src="{{url($photo->thumbnail_path)}}">
+						</div>
+					@endforeach
+				</div>
 			@endforeach
 		</div>
 	</div>

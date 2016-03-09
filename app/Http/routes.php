@@ -39,14 +39,15 @@ Route::get('showassets', function () {
 Route::group(['middleware' => ['web']], function () {
     //
     Route::resource('flyers', 'FlyersController');
+    Route::get('{zip}/{street}', 'FlyersController@show');
+	Route::post('{zip}/{street}/photos', 'FlyersController@addPhotos');
     Route::auth();
     Route::get('/home', 'HomeController@index');
     
 });
 
 
-Route::get('{zip}/{street}', 'FlyersController@show');
-Route::post('{zip}/{street}/photos', 'FlyersController@addPhotos');
+
 
 
 

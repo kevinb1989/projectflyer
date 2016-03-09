@@ -39,6 +39,8 @@
 				{!!Form::textarea('description', null, ['id' => 'description', 'class' => 'form-control'])!!}
 			</div>
 
+			{!!Form::hidden('user_id', $user->id)!!}
+
 			<!-- <div class='form-group'>
 				{!!Form::label('photos', 'Photos: ')!!}
 				{!!Form::file('photos', ['id' => 'photos', 'class' => 'form-control'])!!}

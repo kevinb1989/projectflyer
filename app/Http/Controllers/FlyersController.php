@@ -11,12 +11,18 @@ use App\Http\Controllers\Controller;
 use App\Flyer;
 use App\Photo;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Auth;
+use App\Http\Controllers\Traits\AuthorizesUsers;
 
 
 class FlyersController extends Controller
 {
+    use AuthorizesUsers;
+
     public function __construct(){
         $this->middleware('auth', ['except' => ['show']]);
+
+        parent::__construct();
     }
 
 
@@ -118,6 +124,14 @@ class FlyersController extends Controller
         //$file->move('flyers/photos', $name);
 
         $flyer = Flyer::locatedAt($zip, $street);
+
+        if(!$flyer->ownedBy(Auth::user())){
+
+            return $this->unauthorized($request);
+
+            
+
+        }
 
         $photo = $this->makePhoto($request->file('photo'));
 

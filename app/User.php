@@ -23,4 +23,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function owns($relation){
+        return $relation->user_id == $this->id;
+    }
 }

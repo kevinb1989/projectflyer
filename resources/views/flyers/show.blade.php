@@ -19,16 +19,21 @@
 					@endforeach
 				</div>
 			@endforeach
+			@if($user && $user->owns($flyer))
+				<h2>Add your photo</h2>
+				{!!Form::open(['method'=>'POST', 'url'=> $flyer->zip . '/' . $flyer->street . '/' . 'photos', 'class'=>'dropzone', 'id'=>'addPhotosForm'])!!}
+				{!!Form::close()!!}
+			@endif
+			
 		</div>
 	</div>
 
 	<hr>
 
-	<h2>Add your photo</h2>
+	
 
 	
-	{!!Form::open(['method'=>'POST', 'url'=> $flyer->zip . '/' . $flyer->street . '/' . 'photos', 'class'=>'dropzone', 'id'=>'addPhotosForm'])!!}
-	{!!Form::close()!!}
+	
 @stop
 
 @section('customscript.footer')

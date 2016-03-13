@@ -58,11 +58,12 @@ class FlyersController extends Controller
     public function store(FlyerRequest $request)
     {
         //
-        Flyer::create($request->all());
+        //Flyer::create($request->all());
+        $flyer = Auth::user()->publish(new Flyer($request->all()));
 
         flash('Flyer created successfully!');
 
-        return redirect()->back();
+        return redirect($flyer->path());
     }
 
     /**
@@ -112,40 +113,5 @@ class FlyersController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function addPhotos($zip, $street, Request $request){
-        $this->validate($request, [
-                'photo' => 'required|mimes:jpg,jpeg,bmp,png'
-            ]);
-
-        //$name = time() . $file->getClientOriginalName();
-
-        //$file->move('flyers/photos', $name);
-
-        $flyer = Flyer::locatedAt($zip, $street);
-
-        if(!$flyer->ownedBy(Auth::user())){
-
-            return $this->unauthorized($request);
-
-            
-
-        }
-        $photo = Photo::fromFile($request->file('photo'));
-
-        //$photo = $this->makePhoto($request->file('photo'));      
-
-        $flyer->addPhoto($photo);
-
-        //$flyer->photos()->create(['path'=>'flyers/photos/'.$name]);
-
-        return 'Uploaded';
-    }
-
-    public function makePhoto(UploadedFile $file){
-
-        return Photo::named($file)->move($file);
-
     }
 }

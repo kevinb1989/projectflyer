@@ -47,4 +47,8 @@ class Flyer extends Model
     public function addPhoto(Photo $photo){
         return $this->photos()->save($photo);
     }
+
+    public function path(){
+        return $this->zip . '/' . str_replace(' ', '-', $this->street);
+    }
 }

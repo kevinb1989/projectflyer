@@ -13,7 +13,9 @@
 
 		{!!Form::close()!!}
 
-		@if($errors->any())
+		
+	</div>
+	@if($errors->any())
 			<div class="alert alert-danger">
 				<ul>
 					@foreach($errors->all() as $error)
@@ -22,7 +24,6 @@
 				</ul>
 			</div>
 		@endif
-	</div>
 	
 @stop
 

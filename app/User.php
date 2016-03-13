@@ -27,4 +27,8 @@ class User extends Authenticatable
     public function owns($relation){
         return $relation->user_id == $this->id;
     }
+
+    public function flyers(){
+        return $this->hasMany('App\Flyer');
+    }
 }

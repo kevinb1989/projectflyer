@@ -132,10 +132,9 @@ class FlyersController extends Controller
             
 
         }
+        $photo = Photo::fromFile($request->file('photo'));
 
-        $photo = $this->makePhoto($request->file('photo'));
-
-        
+        //$photo = $this->makePhoto($request->file('photo'));      
 
         $flyer->addPhoto($photo);
 

@@ -14,7 +14,9 @@
 				<div class="row">
 					@foreach ($set as $photo)
 						<div class="col-md-3 gallery__image">
-							<img src="{{url($photo->thumbnail_path)}}">
+							<a href="{{url($photo->path)}}" data-lity>
+								<img src="{{url($photo->thumbnail_path)}}">
+							</a>
 						</div>
 					@endforeach
 				</div>

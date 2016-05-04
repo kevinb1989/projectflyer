@@ -12,6 +12,10 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * share some variables across views
+     * 
+     */
     public function __construct(){
 
     	view()->share('signedIn', Auth::check());

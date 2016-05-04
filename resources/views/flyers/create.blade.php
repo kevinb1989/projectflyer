@@ -15,6 +15,7 @@
 
 		
 	</div>
+	
 	@if($errors->any())
 			<div class="alert alert-danger">
 				<ul>
@@ -23,7 +24,7 @@
 					@endforeach
 				</ul>
 			</div>
-		@endif
+	@endif
 	
 @stop
 

@@ -20,7 +20,7 @@ class FlyersController extends Controller
     use AuthorizesUsers;
 
     public function __construct(){
-        $this->middleware('auth', ['except' => ['show']]);
+        $this->middleware('auth', ['except' => ['show', 'index']]);
 
         parent::__construct();
     }
@@ -33,8 +33,9 @@ class FlyersController extends Controller
      */
     public function index()
     {
-        //
-        return 'flyers index page';
+        
+        $flyers = Flyer::latest()->paginate(9);
+        return view('flyers.index', compact('flyers'));
     }
 
     /**
@@ -57,11 +58,9 @@ class FlyersController extends Controller
      */
     public function store(FlyerRequest $request)
     {
-        //
-        //Flyer::create($request->all());
         $flyer = Auth::user()->publish(new Flyer($request->all()));
 
-        flash('Flyer created successfully!');
+        flash('The flyer is created successfully!');
 
         return redirect($flyer->path());
     }
@@ -69,14 +68,14 @@ class FlyersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $zip
-     * @param  string $street
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($zip, $street)
+    public function show($id)
     {
 
-        $flyer = Flyer::locatedAt($zip, $street);
+        //$flyer = Flyer::locatedAt($zip, $street);
+        $flyer = Flyer::findOrFail($id);
         return view('flyers.show', compact('flyer'));
         
     }
@@ -113,5 +112,17 @@ class FlyersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Show all flyers of the currently authenticated user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexUserFlyers()
+    {
+        $flyers = Auth::user()->flyers()->latest()->paginate(5);
+
+        return view('flyers.user-flyers', compact('flyers'));
     }
 }

@@ -18,7 +18,10 @@ elixir(function(mix) {
     			'libs/lity.js'
     		])
     	.styles([
+    			'libs/bootstrap.css',
+    			'libs/bootstrap-theme.css',
     			'libs/sweetalert.css',
-    			'libs/lity.css'
+    			'libs/lity.css',
+    			'libs/1-col-portfolio.css'
     		]);
 });

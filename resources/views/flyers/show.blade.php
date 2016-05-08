@@ -1,9 +1,9 @@
-@extends('layout')
+@extends('layouts.default')
 
 @section('content')
 	<div class="row">
 		<div class="col-md-3">
-			<h1> {{$flyer->street}} </h1>
+			<h1> {{$flyer->address}} </h1>
 			<h2>{!!$flyer->price!!}</h2>
 
 			<div class='description'>{{$flyer->description}}</div>
@@ -23,7 +23,9 @@
 			@endforeach
 			@if($user && $user->owns($flyer))
 				<h2>Add your photo</h2>
-				{!!Form::open(['method'=>'POST', 'url'=> $flyer->zip . '/' . $flyer->street . '/' . 'photos', 'class'=>'dropzone', 'id'=>'addPhotosForm'])!!}
+				<!--{!!Form::open(['method'=>'POST', 'url'=> $flyer->zip . '/' . $flyer->address . '/' . 'photos', 'class'=>'dropzone', 'id'=>'addPhotosForm'])!!}
+				{!!Form::close()!!} -->
+				{!!Form::open(['method'=>'POST', 'url'=> $flyer->id . '/' . 'photos', 'class'=>'dropzone', 'id'=>'addPhotosForm'])!!}
 				{!!Form::close()!!}
 			@endif
 			
@@ -49,4 +51,5 @@
 
 		};
 	</script>
+	@include('flash')
 @stop

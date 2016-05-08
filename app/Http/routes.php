@@ -11,12 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+
 
 Route::get('showassets', function () {
     return link_to_asset('/css/app.css');
+});
+
+Route::get('show_first_photo', function () {
+    return dd(url(App\Flyer::find(1)->photos()->first()->path));
 });
 
 
@@ -37,12 +39,37 @@ Route::get('showassets', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+    //home, about and contact pages
+    Route::get('/', [
+        'as' => 'home_path',
+        'uses' => 'PagesController@index'
+    ]);
+    
+    Route::get('about', [
+        'as' => 'about_path',
+        'uses' => 'PagesController@about'
+    ]);
+
+    Route::get('contact', [
+        'as' => 'contact_path',
+        'uses' => 'PagesController@contact'
+    ]);
+
+    
+
+    //profile pages
+    Route::get('users/profile', 'PagesController@profile');
+    Route::get('users/profile/my-flyers', 'FlyersController@indexUserFlyers');
+
+    //routes of flyers
     Route::resource('flyers', 'FlyersController');
-    Route::get('{zip}/{street}', 'FlyersController@show');
-	Route::post('{zip}/{street}/photos', 'PhotosController@store');
+    //Route::get('{zip}/{street}', 'FlyersController@show');
+	Route::post('{flyerId}/photos', 'PhotosController@store');
+
+    // Authentication Routes...
     Route::auth();
-    Route::get('/home', 'HomeController@index');
+    
+    
     
 });
 

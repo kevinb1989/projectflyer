@@ -13,7 +13,7 @@ class Flyer extends Model
      */
 	protected $fillable = [
         'user_id',
-		'street',
+		'address',
 		'city',
 		'state',
 		'country',
@@ -54,15 +54,15 @@ class Flyer extends Model
     }
 
     /**
-     * Find a flyer based on a zip code and a street name
+     * Find a flyer based on a zip code and a address
      * 
      * @param  string $zip
-     * @param  string $street
+     * @param  string $address
      * @return App\Flyer
      */
-    public static function locatedAt($zip, $street){
-    	$street = str_replace('-',' ',$street);
-        return static::where(compact('zip', 'street'))->firstOrFail();
+    public static function locatedAt($zip, $address){
+    	$address = str_replace('-',' ',$address);
+        return static::where(compact('zip', 'address'))->firstOrFail();
 
     }
 
@@ -87,11 +87,22 @@ class Flyer extends Model
     }
 
     /**
-     * Show the url to a specific flyer with its zip code and street name
+     * Show the url to a specific flyer with its id
      * 
      * @return string
      */
     public function path(){
-        return $this->zip . '/' . str_replace(' ', '-', $this->street);
+        //return $this->zip . '/' . str_replace(' ', '-', $this->address);
+        return 'flyers' . '/' . $this->id;
+    }
+
+    /**
+     * Return the short descrption for this flyer in flyers/index page
+     *
+     * @param  integer $length the input length of the short description
+     * @return string
+     */
+    public function shortDescription($length = 200){
+        return substr($this->description, 0, $length) . '...';
     }
 }

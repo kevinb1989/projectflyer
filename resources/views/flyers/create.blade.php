@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.default')
 
 @section('title')
 	<title>create a new flyer</title>
@@ -10,12 +10,10 @@
 
 		{!!Form::open(['method'=>'POST', 'url'=>'flyers',  'enctype'=>'multipart/form-data'])!!}
 			@include('flyers.form')
-
 		{!!Form::close()!!}
 
 		
 	</div>
-	
 	@if($errors->any())
 			<div class="alert alert-danger">
 				<ul>
@@ -26,9 +24,5 @@
 			</div>
 	@endif
 	
-@stop
-
-@section('customscript.footer')
-	@include('flash')
 @stop
 

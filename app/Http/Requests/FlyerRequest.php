@@ -24,7 +24,7 @@ class FlyerRequest extends Request
     public function rules()
     {
         return [
-            'street' => 'required',
+            'address' => 'required',
             'city' => 'required',
             'zip' => 'required',
             'country' => 'required',

@@ -20,7 +20,7 @@ class PhotosController extends Controller
      * @param  Illuminate\Http\Request $request
      * @return string
      */
-    public function store($zip, $street, Request $request){
+    public function store($flyerId, Request $request){
 
         //validate the request
         $this->validate($request, [
@@ -28,7 +28,8 @@ class PhotosController extends Controller
             ]);
 
         //locate the flyer based on the zip code and street name
-        $flyer = Flyer::locatedAt($zip, $street);
+        //$flyer = Flyer::locatedAt($zip, $street);
+        $flyer = Flyer::findOrFail($flyerId);
 
         //make sure the flyer is owned by the current authenticated user.
         if(!$flyer->ownedBy(\Auth::user())){

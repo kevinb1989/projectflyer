@@ -3,8 +3,8 @@
 <div class="col-md-6">
 
 			<div class='form-group'>
-				{!!Form::label('street', 'Street: ')!!}
-				{!!Form::text('street', null, ['id' => 'street', 'class' => 'form-control'])!!}
+				{!!Form::label('address', 'Address: ')!!}
+				{!!Form::text('address', null, ['id' => 'street', 'class' => 'form-control', 'placeholder' => '118 Summerset St'])!!}
 			</div>
 
 			<div class='form-group'>
@@ -38,14 +38,6 @@
 				{!!Form::label('description', 'Description: ')!!}
 				{!!Form::textarea('description', null, ['id' => 'description', 'class' => 'form-control'])!!}
 			</div>
-
-			
-
-			<!-- <div class='form-group'>
-				{!!Form::label('photos', 'Photos: ')!!}
-				{!!Form::file('photos', ['id' => 'photos', 'class' => 'form-control'])!!}
-				{!!Form::hidden('user_id', $user->id)!!}
-			</div> -->
 			
 </div>
 <div class="col-md-12">
